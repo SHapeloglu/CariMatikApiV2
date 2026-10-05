@@ -1,40 +1,28 @@
-# CLAUDE.md
+# CLAUDE.md — CariMatik API v2 (FastAPI + JWT)
 
-Bu dosya, bu proje üzerinde çalışırken Claude'un (Claude Code dahil) izlemesi gereken bağlamı ve kuralları içerir.
+CariMatik (FinansApp) MySQL şemasını REST olarak açan FastAPI katmanı. V1'in tüm CRUD endpoint'lerine ek olarak **API kaynağı (ApiYetki) yönetimi** ve **kaynak başına secret ile JWT** tasarımı (`auth.py`) içerir.
 
-## Proje
+- GitHub: https://github.com/SHapeloglu/CariMatikApiV2 (tek yükleme, 2026-05-06)
+- Bu dosyaların birebir kopyası **CariMatik** reposunun kökünde (`api.py`, `auth.py`) duruyor; `CariMatik/api/` altındaki sürüm farklı.
+- Mimari: `architect.md` · Görevler: `task.md` · Fikirler: `backlog.md` · Günlük: `session.md`
 
-**📊 Muhasebe API v2** — Flask tabanlı muhasebe uygulamasının tüm tablolarını dışarıya açan **FastAPI** REST katmanı. Mevcut Flask uygulamasına (`app.py`) hiç dokunmadan, aynı MySQL veritabanı üzerinde çalışır. ---
-
-- GitHub: https://github.com/SHapeloglu/CariMatikApiV2
-
-## Teknoloji Yığını
-
-- Python
-
-## Önemli Dosyalar
-
-_(belirgin giriş noktası bulunamadı)_
-
-Mimari ayrıntılar için bkz. `architect.md`.
-
-## Sık Kullanılan Komutlar
+## Çalıştırma
 
 ```bash
-# Henüz belgelenmiş komut yok — kurulum/çalıştırma adımlarını buraya ekleyin.
+pip install fastapi uvicorn sqlalchemy pymysql cryptography pydantic "python-jose[cryptography]" "passlib[bcrypt]"
+# CariMatik config.py'yi buraya kopyala (yoksa DATABASE_URL ortam değişkeni)
+uvicorn api:app --reload --port 8000    # /docs, /redoc, /health
 ```
+
+## Durum — dikkat
+
+- **`auth.py` henüz `api.py`'ye bağlanmamış.** `auth.py` `from api import get_db, Kullanici, ApiYetki` yapıyor ama `api.py` auth'u import etmiyor; `Depends(admin_gerekli)` satırları yorumda, login endpoint'i yok (sadece `TokenYanit` şeması var). Şu an **tüm endpoint'ler korumasız**, `ApiYetki` yönetim uçları dahil (`api_key`/`secret_key` döndürüyor).
+- **Şifre hash uyumsuzluğu:** `auth.py` passlib **bcrypt** ile doğruluyor; CariMatik Flask uygulaması kullanıcıları werkzeug `generate_password_hash` (pbkdf2/scrypt) ile kaydediyor. Entegrasyon yapılınca web'den açılmış kullanıcılar API'ye giriş yapamaz — `werkzeug.security.check_password_hash` kullanılmalı.
+- Döngüsel import riski: `auth` → `api` ve ileride `api` → `auth`. Ortak modelleri/`get_db`'yi ayrı modüle (`db.py`) almak gerekir.
 
 ## Kurallar
 
-- `.env`, parola, token ve API anahtarlarını asla commit etme.
-- Her çalışma oturumunun sonunda `session.md`ye kısa kayıt düş; görev durumunu `task.md`de güncelle.
-- Önceliklendirilmemiş fikirleri `backlog.md`ye yaz; somutlaşınca `task.md`ye taşı.
-
-## Çalışma Dosyaları
-
-| Dosya | Amaç |
-|---|---|
-| `architect.md` | Mimari ve dizin yapısı referansı |
-| `task.md` | Aktif / devam eden / tamamlanan görevler |
-| `backlog.md` | Önceliklendirilmemiş fikir ve teknik borç havuzu |
-| `session.md` | Oturum günlüğü — her oturum sonunda güncellenir |
+- Modeller CariMatik `app.py` tablolarının elle kopyası; şema değişince ikisini birlikte güncelle.
+- `secret_key` asla yanıtta/logda dönmemeli (rotate uç noktası şu an tüm nesneyi dönüyor — kontrol et).
+- CORS `*` — üretimde kısıtla.
+- Oturum sonunda `session.md`'ye kayıt düş, `task.md`'yi güncelle.

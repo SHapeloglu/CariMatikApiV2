@@ -1,14 +1,13 @@
-# task.md — 📊 Muhasebe API v2 Görev Takibi
-
-Bu dosya projedeki güncel görevleri takip etmek için kullanılır. Yeni bir göreve başlarken "Devam Eden"e taşı, bitirince "Tamamlanan"a taşı ve tarih ekle.
+# task.md — CariMatik API v2 Görevleri
 
 ## 🔜 Sıradaki
 
-- [ ] `CLAUDE.md` / `architect.md` içeriğini doğrula ve eksikleri tamamla
-- [ ] Repo kökünde `.gitignore` yok — `venv/`, `__pycache__/`, `.env`, build çıktıları için eklenmeli.
-- [ ] Otomatik test bulunamadı — kritik akışlar için en azından duman (smoke) testleri eklenmeli.
-
-> Uzun vadeli / önceliklendirilmemiş fikirler için bkz. `backlog.md`.
+- [ ] `auth.py`'yi bağla: `get_db` + modelleri ayrı modüle taşı (döngüsel importu kır), `POST /login` ekle, tüm `/api/v2/*` uçlarına rol bağımlılığı ekle
+  - Kabul: token'sız istek 401; `SADECE_OKUMA` token'ıyla POST/PUT/DELETE 403; `api-yetkiler` uçları sadece ADMIN.
+- [ ] Şifre doğrulamayı CariMatik ile uyumlu yap (`werkzeug.security.check_password_hash`)
+- [ ] Rotate / listeleme yanıtlarından `secret_key`'i çıkar
+- [ ] `requirements.txt` ve `.gitignore` (`config.py`) ekle
+- [ ] CariMatik'teki kopyalarla (kök `api.py`/`auth.py`, `api/` klasörü) tek kaynak belirle
 
 ## 🚧 Devam Eden
 
@@ -16,15 +15,5 @@ _(şu anda boş)_
 
 ## ✅ Tamamlanan
 
-- [x] 2026-10-05 — Proje çalışma dosyaları oluşturuldu
-
----
-
-### Görev Ekleme Şablonu
-
-```markdown
-- [ ] Kısa görev başlığı
-  - Bağlam: neden yapılıyor
-  - Kabul kriteri: ne zaman "bitti" sayılır
-  - İlgili dosyalar: ...
-```
+- [x] 2026-10-05 — Çalışma dosyaları kod okunarak yeniden yazıldı
+- [x] 2026-05-06 — V2 (api.py + auth.py + README) yüklendi

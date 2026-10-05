@@ -1,42 +1,33 @@
-# session.md — 📊 Muhasebe API v2 Oturum Günlüğü
-
-Her çalışma oturumunda buraya kısa bir kayıt düşülür: ne yapıldı, hangi kararlar alındı, sıradaki adım ne. Amaç, bir sonraki oturuma (veya başka bir geliştiriciye/Claude örneğine) hızlıca bağlam aktarmak.
-
----
-
-## Şablon
-
-```markdown
-## YYYY-AA-GG
-
-**Yapılanlar:**
-- ...
-
-**Alınan kararlar / neden:**
-- ...
-
-**Açık sorunlar / bilinen eksikler:**
-- ...
-
-**Sıradaki adım:**
-- ...
-```
+# session.md — CariMatik API v2 Oturum Günlüğü
 
 ---
 
 ## 2026-10-05
 
 **Yapılanlar:**
-- Eksik proje çalışma dosyaları oluşturuldu: `architect.md`, `backlog.md`, `CLAUDE.md`, `session.md`, `task.md`.
-- İçerik; README, dosya yapısı, bağımlılık dosyaları ve git geçmişinden çıkarıldı.
+- Şablondan üretilmiş çalışma dosyaları kod okunarak yeniden yazıldı.
 
-**Açık sorunlar / bilinen eksikler:**
-- Repo kökünde `.gitignore` yok — `venv/`, `__pycache__/`, `.env`, build çıktıları için eklenmeli.
-- Otomatik test bulunamadı — kritik akışlar için en azından duman (smoke) testleri eklenmeli.
+**Tespitler:**
+- `auth.py` api.py'ye bağlı değil → tüm uçlar korumasız (ApiYetki yönetimi dahil).
+- bcrypt (passlib) ↔ werkzeug hash uyumsuzluğu.
+- Dosyalar CariMatik kökündeki `api.py`/`auth.py` ile birebir aynı.
 
-**Sıradaki adım:**
-- `CLAUDE.md` ve `architect.md` içeriğini gözden geçirip proje sahibinin bilgisiyle tamamla.
+**Sıradaki adım:** `task.md` → "Sıradaki".
 
-### Bu tarihten önceki son commit'ler (referans)
+---
 
-- 2026-05-06 — Add files via upload
+## 2026-05-06
+
+- V2 tek commit ile yüklendi (JWT tasarımı + ApiYetki). Ayrıntılı kayıt yok.
+
+---
+
+### Kayıt Şablonu
+
+```markdown
+## YYYY-AA-GG
+**Yapılanlar:** ...
+**Kararlar / neden:** ...
+**Açık sorunlar:** ...
+**Sıradaki adım:** ...
+```

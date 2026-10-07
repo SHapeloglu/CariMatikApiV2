@@ -1,5 +1,7 @@
 # CLAUDE.md — CariMatik API v2 (FastAPI + JWT)
 
+> 🗄️ **ARŞİV (2026-10-07):** Bu repo artık geliştirilmiyor. Kod (`api.py` + `auth.py`) ve bu belge **[CariMatik](https://github.com/SHapeloglu/CariMatik)** reposuna taşındı (kökte `api.py`/`auth.py`, belge `API.md`); açık görevler CariMatik `task.md`'de.
+
 CariMatik (FinansApp) MySQL şemasını REST olarak açan FastAPI katmanı. V1'in tüm CRUD endpoint'lerine ek olarak **API kaynağı (ApiYetki) yönetimi** ve **kaynak başına secret ile JWT** tasarımı (`auth.py`) içerir.
 
 - GitHub: https://github.com/SHapeloglu/CariMatikApiV2 (tek yükleme, 2026-05-06)

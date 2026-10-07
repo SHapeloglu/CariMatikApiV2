@@ -1,5 +1,7 @@
 # task.md — CariMatik API v2 Görevleri
 
+> 🗄️ 2026-10-07: repo arşivlendi — kod ve açık maddeler CariMatik reposunda (`task.md` → REST API).
+
 ## 🔜 Sıradaki
 
 - [ ] `auth.py`'yi bağla: `get_db` + modelleri ayrı modüle taşı (döngüsel importu kır), `POST /login` ekle, tüm `/api/v2/*` uçlarına rol bağımlılığı ekle

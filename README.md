@@ -1,5 +1,7 @@
 # 📊 Muhasebe API v2
 
+> 🗄️ **ARŞİV (2026-10-07):** Bu repo artık geliştirilmiyor. Kod (`api.py` + `auth.py`) ve bu belge **[CariMatik](https://github.com/SHapeloglu/CariMatik)** reposuna taşındı (kökte `api.py`/`auth.py`, belge `API.md`); açık görevler CariMatik `task.md`'de.
+
 Flask tabanlı muhasebe uygulamasının tüm tablolarını dışarıya açan **FastAPI** REST katmanı.
 Mevcut Flask uygulamasına (`app.py`) hiç dokunmadan, aynı MySQL veritabanı üzerinde çalışır.
 
